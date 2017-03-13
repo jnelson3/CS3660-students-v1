@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/img/manifest.json">
+    <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="msapplication-config" content="/img/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Students</title>
+    <link rel='stylesheet' href='./lib/bootstrap-3.3.6.min.css' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous'>
+    <link rel='stylesheet' href='./lib/bootstrap-theme-3.3.6.min.css' integrity='sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r' crossorigin='anonymous'>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src='./lib/html5shiv-3.7.2.min.js'></script>
+      <script src='./lib/respond-1.4.2.min.js'></script>
+    <![endif]-->
+    <link rel='stylesheet' type='text/css' href='styles.css'>
+</head>
+
+<body>
+    <div class='container-fluid'>
+        <div class='btn-group' role='group' aria-label='...'>
+            <a href='#' data-toggle='tooltip' title='Display Table'>
+                <button type='button' class='btn btn-default' id='tableViewButton'>
+                    <span class='glyphicon glyphicon-check' aria-hidden='true' id='tableViewButtonCheckbox'></span>
+                    Table
+                </button>
+            </a>
+
+            <a href='#' data-toggle='tooltip' title='Display Tiles'>
+                <button type='button' class='btn btn-default' id='tileViewButton'>
+                    <span class='glyphicon glyphicon-unchecked' aria-hidden='true' id='tileViewButtonCheckbox'></span>
+                    Tile
+                </button>
+            </a>
+
+            <a href='#' data-toggle='tooltip' title='Restore Last Deleted Student'>
+                <button type='button' class='btn btn-default ' id='restoreStudentButton'>
+                    <span class='glyphicon glyphicon-repeat icon-flipped' aria-hidden='true' id='restoreStudentButtonIcon'></span>
+                    
+                </button>
+            </a>
+
+            <a href='#' data-toggle='tooltip' title='Add New Student'>
+                <button type='button' class='btn btn-default' id='addStudentButton'>
+                    <span class='glyphicon glyphicon-plus' aria-hidden='true' id='addStudentButtonIcon'></span>
+                    
+                </button>
+            </a>
+        </div>
+
+
+        <!-- Tile View ------------------------------->
+        <div class='row row-eq-height' id='studentGridTiles'>
+        </div>
+        <!-- Table View ------------------------------->
+        <table class='table table-striped' id='studentTable'>
+            <thead>
+                <tr>
+                    <th class='tableHeading' id='fnameHeading'>
+                        Name
+                        <span class='sortButton sortButtonAscend' id='fnameAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='fnameDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='dateHeading'>
+                        Start Date
+                        <span class='sortButton sortButtonAscend' id='dateAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='dateDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='addressHeading'>
+                        Address
+                        <span class='sortButton sortButtonAscend' id='addressAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='addressDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='cityHeading'>
+                        City
+                        <span class='sortButton sortButtonAscend' id='cityAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='cityDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='stateHeading'>
+                        State
+                        <span class='sortButton sortButtonAscend' id='stateAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='stateDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='zipHeading'>
+                        ZIP
+                        <span class='sortButton sortButtonAscend' id='zipAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='zipDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='phoneHeading'>
+                        Phone
+                        <span class='sortButton sortButtonAscend' id='phoneAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='phoneDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='yearHeading'>
+                        Year
+                        <span class='sortButton sortButtonAscend' id='yearAscendSortButton'>
+                            ▲
+                        </span>
+                        <span class='sortButton sortButtonDescend' id='yearDescendSortButton'>
+                            ▼
+                        </span>
+                    </th>
+                    <th class='tableHeading' id='deleteHeading'>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id='studentTableRows'>
+            </tbody>
+        </table>
+
+        <!-- Loading Modal -->
+        <div class='modal fade' id='loadingModal' role='dialog'>
+            <div class='modal-dialog'>
+
+                <!-- Modal content-->
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                        <h4 class='modal-title'>Loading Data</h4>
+                    </div>
+                    <div class='modal-body'>
+                        <p>Please wait while we load the data from the server.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Processing Modal -->
+        <div class='modal fade' id='sortingModal' role='dialog'>
+            <div class='modal-dialog'>
+
+                <!-- Modal content-->
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                        <h4 class='modal-title'>Sorting Data</h4>
+                    </div>
+                    <div class='modal-body'>
+                        <p>Please wait while we sort the data.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div class='modal fade' id='editModal' role='dialog'>
+            <div class='modal-dialog'>
+
+                <!-- Modal content-->
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                        <h4 class='modal-title' id='editModalTitle'>Edit Contact</h4>
+                    </div>
+                    <div class='modal-body' id='editModalBody'>
+                        First name:<br>
+                        <input type="text" name="firstname" id='editModalFName'><br> Last name:<br>
+                        <input type="text" name="lastname" id='editModalLName'><br> Start Date:<br>
+                        <input type="text" name="startdate" id='editModalStartDate'><br> Address:
+                        <br>
+                        <input type="text" name="address" id="editModalAddres"><br> City:
+                        <br>
+                        <input type="text" name="city" id="editModalCity"><br> State:
+                        <br>
+                        <input type="text" name="state" id="editModalState"><br> ZIP:
+                        <br>
+                        <input type="text" name="zip" id="editModalZip"><br> Phone:
+                        <br>
+                        <input type="text" name="phone" id="editModalPhone"><br> Year:
+                        <br>
+                        <input type="text" name="year" id="editModalYear"><br>
+                        <br><br>
+                        <input type="button" name="submit" value="submit" id="editModalSubmit">
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class='btn-group' role='group' aria-label='...'>
+            <a href='#' data-toggle='tooltip' title='Previous Page'>
+                <button type='button' class='btn btn-default' id='previousPageButton'>
+                    <span class='glyphicon glyphicon-menu-left' aria-hidden='true' id='previousPageButtonIcon'></span>
+                </button>
+            </a>
+
+            <a href='#' data-toggle='tooltip' title='Next Page'>
+                <button type='button' class='btn btn-default' id='nextPageButton'>
+                    <span class='glyphicon glyphicon-menu-right' aria-hidden='true' id='nextPageButtonIcon'></span>
+                </button>
+            </a>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+
+    <!-- Underscore.js -->
+    <script src='./lib/underscore-min-1.8.3.js'></script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src='./lib/jquery-2.2.4.min.js'></script>
+    <script src='./lib/bootstrap-3.3.6.min.js' integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS' crossorigin='anonymous'></script>
+
+    <script src='sortComparators.js'></script>
+    <script src='script.js'></script>
+
+
+
+</body>
+
+</html>
