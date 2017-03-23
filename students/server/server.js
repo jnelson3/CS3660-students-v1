@@ -11,7 +11,7 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var bodyParser = require('body-parser');
 
-var WEB = path.resolve('../web'); // __dirname is the directory where the application is running from
+var WEB = path.resolve('./students/web'); // __dirname is the directory where the application is running from
 //var WEB = __dirname.replace('server', 'web');
 var SERVER = __dirname; // __dirname is the directory where the application is running from
 
@@ -121,7 +121,7 @@ app.get('*', function(req, res) {
    res.status(404).sendFile(WEB + '/404.html');
 });
 
-var server = app.listen(process.env.PORT, process.env.IP);
+var server = app.listen(80, '0.0.0.0');
 
 console.log('Server is listening');
 

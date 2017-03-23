@@ -29,7 +29,7 @@
     <link rel='stylesheet' type='text/css' href='styles.css'>
 </head>
 
-<body ng-app="app" ng-controller="StudentsController">
+<body>
     <div class='container-fluid'>
         <div class='btn-group' role='group' aria-label='...'>
             <a href='#' data-toggle='tooltip' title='Display Table'>
@@ -66,78 +66,78 @@
         <div class='row row-eq-height' id='studentGridTiles'>
         </div>
         <!-- Table View ------------------------------->
-        <table class='table table-striped' id='studentTable' >
+        <table class='table table-striped' id='studentTable'>
             <thead>
                 <tr>
-                    <th class='tableHeading'  ng-click="sortBy('name')">
+                    <th class='tableHeading' id='fnameHeading'>
                         Name
-                        <span class='sortButton sortButtonAscend' ng-show="(propertyName === 'fname' || propertyName === 'lname') && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='fnameAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend' ng-show="(propertyName === 'fname' || propertyName === 'lname') && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='fnameDescendSortButton'>
                             ▼
                         </span>
                     </th>
-                    <th class='tableHeading'  ng-click="sortBy('startDate')">
+                    <th class='tableHeading' id='dateHeading'>
                         Start Date
-                        <span class='sortButton sortButtonAscend'  ng-show="propertyName === 'startDate' && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='dateAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend'  ng-show="propertyName === 'startDate' && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='dateDescendSortButton'>
                             ▼
                         </span>
                     </th>
-                    <th class='tableHeading'  ng-click="sortBy('address')">
+                    <th class='tableHeading' id='addressHeading'>
                         Address
-                        <span class='sortButton sortButtonAscend'  ng-show="propertyName === 'address' && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='addressAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend'  ng-show="propertyName === 'address' && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='addressDescendSortButton'>
                             ▼
                         </span>
                     </th>
-                    <th class='tableHeading'  ng-click="sortBy('city')">
+                    <th class='tableHeading' id='cityHeading'>
                         City
-                        <span class='sortButton sortButtonAscend'  ng-show="propertyName === 'city' && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='cityAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend'  ng-show="propertyName === 'city' && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='cityDescendSortButton'>
                             ▼
                         </span>
                     </th>
-                    <th class='tableHeading'  ng-click="sortBy('state')">
+                    <th class='tableHeading' id='stateHeading'>
                         State
-                        <span class='sortButton sortButtonAscend'  ng-show="propertyName === 'state' && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='stateAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend'  ng-show="propertyName === 'state' && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='stateDescendSortButton'>
                             ▼
                         </span>
                     </th>
-                    <th class='tableHeading'  ng-click="sortBy('zip')">
+                    <th class='tableHeading' id='zipHeading'>
                         ZIP
-                        <span class='sortButton sortButtonAscend'  ng-show="propertyName === 'zip' && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='zipAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend'  ng-show="propertyName === 'zip' && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='zipDescendSortButton'>
                             ▼
                         </span>
                     </th>
-                    <th class='tableHeading'  ng-click="sortBy('phone')">
+                    <th class='tableHeading' id='phoneHeading'>
                         Phone
-                        <span class='sortButton sortButtonAscend'  ng-show="propertyName === 'phone' && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='phoneAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend'  ng-show="propertyName === 'phone' && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='phoneDescendSortButton'>
                             ▼
                         </span>
                     </th>
-                    <th class='tableHeading'   ng-click="sortBy('year')">
+                    <th class='tableHeading' id='yearHeading'>
                         Year
-                        <span class='sortButton sortButtonAscend'  ng-show="propertyName === 'year' && reverseSort === false">
+                        <span class='sortButton sortButtonAscend' id='yearAscendSortButton'>
                             ▲
                         </span>
-                        <span class='sortButton sortButtonDescend'  ng-show="propertyName === 'year' && reverseSort === true">
+                        <span class='sortButton sortButtonDescend' id='yearDescendSortButton'>
                             ▼
                         </span>
                     </th>
@@ -146,38 +146,6 @@
                 </tr>
             </thead>
             <tbody id='studentTableRows'>
-                <tr id="${student.id}" ng-repeat="student in students | orderBy:propertyName:reverseSort">
-                    <td>
-                        <span ng-bind-html="student.fname"></span>
-                        <span ng-bind-html="student.lname"></span>
-                    </td>
-                    <td>
-                        <ng-bind-html ng-bind-html="student.startDate" />
-                    </td>
-                    <td>
-                        <ng-bind-html ng-bind-html="student.street" />
-                    </td>
-                    <td>
-                        <ng-bind-html ng-bind-html="student.city" /></td>
-                    <td>
-                        <ng-bind-html ng-bind-html="student.state" />\
-                    </td>
-                    <td>
-                        <ng-bind-html ng-bind-html="student.zip" /></td>
-                    <td>
-                        <ng-bind-html ng-bind-html="student.phone" /></td>
-                    <td>
-                        <ng-bind-html ng-bind-html="yearNumToText(student.year)" /></td>
-                    <td>
-                        <a href='#' data-toggle='tooltip' title='Delete'>
-                            <span class="glyphicon glyphicon-trash delete-button" aria-hidden="true" ng-click="deleteStudent(student.id)"></span>
-                        </a>
-
-                        <a href='#' data-toggle='tooltip' title='Edit'>
-                            <span class="glyphicon glyphicon-pencil edit-button" aria-hidden="true" ng-click="editStudent(student.id)"></span>
-                        </a>
-                    </td>
-                </tr>
             </tbody>
         </table>
 
@@ -285,9 +253,6 @@
 
     <script src='sortComparators.js'></script>
     <script src='script.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.min.js"></script>
-    <script src="StudentsController.js"></script>
 
 
 

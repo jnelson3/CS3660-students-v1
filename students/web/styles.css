@@ -1,7 +1,6 @@
 .sortButton {
     color:#000000;
     position:absolute;
-    display:none;
 }
 .sortButton.active {
     color:#000000;

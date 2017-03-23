@@ -35,46 +35,46 @@ let currentPage = 0;
 let deletedStudents = [];
 let cookieName = 'lastView';
 let modalDelay = 1000;
-let jQurl = 'http://localhost/api/v1/students';
+let url = 'http://locahost/api/v1/students';
 
-// function renderTable() {
-//     let studentRows = [];
-//     for (let student of students) {
-//         if (student) {
-//             studentRows.push(`
-//                     <tr id="${student.id}">
-//                     <td>${student.fname} ${student.lname}</td>
-//                     <td>${student.startDate}</td>
-//                     <td>${student.street}</td>
-//                     <td>${student.city}</td>
-//                     <td>${student.state}</td>
-//                     <td>${student.zip}</td>
-//                     <td>${student.phone}</td>
-//                     <td>${yearNumToText(student.year)}</td>
-//                     <td>
-//                         <a href='#' data-toggle='tooltip' title='Delete'>
-//                             <span class="glyphicon glyphicon-trash delete-button" aria-hidden="true" data-student-id="${student.id}"></span>
-//                         </a>
-//
-//                         <a href='#' data-toggle='tooltip' title='Edit'>
-//                             <span class="glyphicon glyphicon-pencil edit-button" aria-hidden="true" data-student-id="${student.id}"></span>
-//                         </a>
-//                     </td>
-//                     </tr>
-//                 `);
-//         }
-//     }
-//     $('#studentTableRows').html(studentRows.join(' '));
-//
-//     $('.edit-button').click(function() {
-//         $('#editModalTitle').html('Edit Student')
-//         showEditModal($(this).attr('data-student-id'));
-//     });
-//     $('.delete-button').click(function() {
-//         console.log('delete button pressed ' + $(this).attr('data-student-id'));
-//         handleDelete($(this).attr('data-student-id'));
-//     });
-// }
+function renderTable() {
+    let studentRows = [];
+    for (let student of students) {
+        if (student) {
+            studentRows.push(`
+                    <tr id="${student.id}">
+                    <td>${student.fname} ${student.lname}</td>
+                    <td>${student.startDate}</td>
+                    <td>${student.street}</td>
+                    <td>${student.city}</td>
+                    <td>${student.state}</td>
+                    <td>${student.zip}</td>
+                    <td>${student.phone}</td>
+                    <td>${yearNumToText(student.year)}</td>
+                    <td>
+                        <a href='#' data-toggle='tooltip' title='Delete'>
+                            <span class="glyphicon glyphicon-trash delete-button" aria-hidden="true" data-student-id="${student.id}"></span>
+                        </a>
+            
+                        <a href='#' data-toggle='tooltip' title='Edit'>
+                            <span class="glyphicon glyphicon-pencil edit-button" aria-hidden="true" data-student-id="${student.id}"></span>
+                        </a>
+                    </td>
+                    </tr>
+                `);
+        }
+    }
+    $('#studentTableRows').html(studentRows.join(' '));
+
+    $('.edit-button').click(function() {
+        $('#editModalTitle').html('Edit Student')
+        showEditModal($(this).attr('data-student-id'));
+    });
+    $('.delete-button').click(function() {
+        console.log('delete button pressed ' + $(this).attr('data-student-id'));
+        handleDelete($(this).attr('data-student-id'));
+    });
+}
 
 function renderTiles() {
     let studentTiles = [];
@@ -103,10 +103,10 @@ function renderTiles() {
 
 
 function buildPage() {
-    //console.log('students = ' + students);
+    console.log('students = ' + students);
     //$.getJSON('students.json', function(studentsJsonDoc) {
     //    students = studentsJsonDoc;
-    //renderTable();
+    renderTable();
     renderTiles();
 
     $('#nextPageButton').unbind('click');
@@ -146,7 +146,7 @@ function buildPage() {
     $('#tableViewButton').unbind('click');
     $('#tableViewButton').click(function() {
         setCookie(cookieName, 'table');
-        //renderTable();
+        renderTable();
         $('#studentTable').show();
         $('#studentGridTiles').hide();
         $('#tableViewButtonCheckbox').removeClass('glyphicon-unchecked');
@@ -183,13 +183,13 @@ function buildPage() {
             delete student.id;
             $.when($.ajax({
                 method: "POST",
-                url: jQurl,
+                url: url,
                 contentType: 'application/json',
                 data: JSON.stringify(student)
             })).done(function(data, statusText, jqXHR) {
                 student.id = data;
                 students.push(student);
-                //renderTable();
+                renderTable();
                 renderTiles();
             });
 
@@ -222,7 +222,7 @@ function buildPage() {
             sortedAs = 'fnameAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -251,7 +251,7 @@ function buildPage() {
             setCookie('sort', sortedAs);
         }
 
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -278,7 +278,7 @@ function buildPage() {
             sortedAs = 'dateAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -305,7 +305,7 @@ function buildPage() {
             sortedAs = 'addressAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -332,7 +332,7 @@ function buildPage() {
             sortedAs = 'cityAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -359,7 +359,7 @@ function buildPage() {
             sortedAs = 'stateAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -386,7 +386,7 @@ function buildPage() {
             sortedAs = 'zipAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -413,7 +413,7 @@ function buildPage() {
             sortedAs = 'phoneAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -440,7 +440,7 @@ function buildPage() {
             sortedAs = 'yearAscending';
             setCookie('sort', sortedAs);
         }
-        //renderTable();
+        renderTable();
         $('#sortingModal').modal('hide');
     });
 
@@ -456,7 +456,7 @@ function buildPage() {
             $('#fnameAscendSortButton').addClass('active');
             sortedAs = 'fnameAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'fnameDescending':
             students = _.sortBy(students, 'fname');
@@ -466,7 +466,7 @@ function buildPage() {
             students.reverse();
             sortedAs = 'fnameDescending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'dateAscending':
             $('#dateAscendSortButton').addClass('active');
@@ -475,7 +475,7 @@ function buildPage() {
             });
             sortedAs = 'dateAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'dateDescending':
             $('#dateDescendSortButton').addClass('active');
@@ -485,7 +485,7 @@ function buildPage() {
             sortedAs = 'dateDescending';
 
 
-            //renderTable();
+            renderTable();
             break;
         case 'addressAscending':
             $('#addressAscendSortButton').addClass('active');
@@ -494,7 +494,7 @@ function buildPage() {
             });
             sortedAs = 'addressAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'addressDescending':
             $('#addressDescendSortButton').addClass('active');
@@ -504,7 +504,7 @@ function buildPage() {
             students.reverse();
             sortedAs = 'addressDescending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'cityAscending':
             $('#cityAscendSortButton').addClass('active');
@@ -513,7 +513,7 @@ function buildPage() {
             });
             sortedAs = 'cityAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'cityDescending':
             $('#cityDescendSortButton').addClass('active');
@@ -523,7 +523,7 @@ function buildPage() {
             students.reverse();
             sortedAs = 'cityDescending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'stateAscending':
             $('#stateAscendSortButton').addClass('active');
@@ -532,7 +532,7 @@ function buildPage() {
             });
             sortedAs = 'stateAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'stateDescending':
             $('#stateDescendSortButton').addClass('active');
@@ -542,7 +542,7 @@ function buildPage() {
             students.reverse();
             sortedAs = 'stateDescending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'zipAscending':
             $('#zipAscendSortButton').addClass('active');
@@ -551,7 +551,7 @@ function buildPage() {
             });
             sortedAs = 'zipAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'zipDescending':
             $('#zipDescendSortButton').addClass('active');
@@ -561,7 +561,7 @@ function buildPage() {
             students.reverse();
             sortedAs = 'zipDescending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'phoneAscending':
             $('#phoneAscendSortButton').addClass('active');
@@ -570,7 +570,7 @@ function buildPage() {
             });
             sortedAs = 'phoneAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'phoneDescending':
             $('#phoneDescendSortButton').addClass('active');
@@ -580,7 +580,7 @@ function buildPage() {
             students.reverse();
             sortedAs = 'phoneDescending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'yearAscending':
             $('#yearAscendSortButton').addClass('active');
@@ -589,7 +589,7 @@ function buildPage() {
             });
             sortedAs = 'yearAscending';
 
-            //renderTable();
+            renderTable();
             break;
         case 'yearDescending':
             $('#yearDescendSortButton').addClass('active');
@@ -599,7 +599,7 @@ function buildPage() {
             students.reverse();
             sortedAs = 'yearDescending';
 
-            //renderTable();
+            renderTable();
             break;
         default:
             students = _.sortBy(students, 'fname');
@@ -608,7 +608,7 @@ function buildPage() {
             $('#fnameAscendSortButton').addClass('active');
             sortedAs = 'fnameAscending';
 
-            //renderTable();
+            renderTable();
             break;
     }
 
@@ -667,7 +667,7 @@ function handleEdit(id) {
     if (id) {
         $.when($.ajax({
             method: "PUT",
-            url: `${jQurl}/${id}.json`,
+            url: `${url}/${id}.json`,
             contentType: 'application/json',
             data: JSON.stringify(student)
         })).done(function(data, statusText, jqXHR) {
@@ -677,7 +677,7 @@ function handleEdit(id) {
     else {
         $.when($.ajax({
             method: "POST",
-            url: jQurl,
+            url: url,
             contentType: 'application/json',
             data: JSON.stringify(student)
         })).done(function(data, statusText, jqXHR) {
@@ -686,7 +686,7 @@ function handleEdit(id) {
     }
 
     $('#editModal').modal('hide');
-    //renderTable();
+    renderTable();
     renderTiles();
 }
 
@@ -700,7 +700,7 @@ function handleDelete(id) {
 
             $.when($.ajax({
                 method: "DELETE",
-                url: `${jQurl}/${id}.json`
+                url: `${url}/${id}.json`
             })).done(function(data, statusText, jqXHR) {
 
             });
@@ -710,7 +710,7 @@ function handleDelete(id) {
             break;
         }
     }
-    //renderTable();
+    renderTable();
     renderTiles();
 }
 
@@ -719,7 +719,7 @@ $(function() {
 });
 
 function loadStudentIds() {
-    $.when($.ajax(jQurl + '/students.json')).done(function(data, statusText, jqXHR) {
+    $.when($.ajax(url + '/students.json')).done(function(data, statusText, jqXHR) {
         studentIds = data;
     });
 }
@@ -728,7 +728,7 @@ function loadStudents() {
     let studentMax = 10;
 
     $('#loadingModal').modal('show');
-    $.when($.ajax(jQurl + '/students.json')).done(function(data, statusText, jqXHR) {
+    $.when($.ajax(url + '/students.json')).done(function(data, statusText, jqXHR) {
         studentIds = data;
         loadPage(0);
     });
@@ -764,7 +764,7 @@ function loadPage(page) {
     students = [];
 
     for (var i = 0; i < count; i++) {
-        $.when($.ajax(jQurl + '/' + studentIds[i + offset] + '.json', {context: {url: jQurl + '/' + studentIds[i + offset] + '.json'}})).done(function(data, statusText, jqXHR) {
+        $.when($.ajax(url + '/' + studentIds[i + offset] + '.json', {context: {url: url + '/' + studentIds[i + offset] + '.json'}})).done(function(data, statusText, jqXHR) {
             studentCount++;
             data.id = jqXHR.getResponseHeader('id');
             students.push(data);
