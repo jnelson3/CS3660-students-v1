@@ -9,10 +9,13 @@ app.factory('studentService', function($http) {
             return $http.get(url + '/students.json');
         },
         getStudent: function (studentID) {
-          return $http.get(`${url}/${studentID}.json`)
+            return $http.get(`${url}/${studentID}.json`)
         },
         deleteStudent: function (studentID) {
             return $http.delete(`${url}/${studentID}.json`)
+        },
+        restoreStudent: function(student) {
+            return $http.put(`${url}/${student.id}.json`, JSON.stringify(student));
         }
     };
 });
@@ -21,6 +24,7 @@ app.controller('StudentsController', ['$scope', 'studentService', function($scop
     $scope.deletedStudents = [];
     $scope.reverseSort = false;
     $scope.propertyName = 'name';
+    $scope.showTiles = false;
 
     studentService.getStudents().then(function(res) {
         //$scope.students = res.data;
@@ -28,6 +32,7 @@ app.controller('StudentsController', ['$scope', 'studentService', function($scop
         for (let studentId of studentIds){
             studentService.getStudent(studentId).then(function(res){
                 $scope.students.push(res.data);
+                console.log(JSON.stringify(res.data));
             });
         };
     })
@@ -89,10 +94,30 @@ app.controller('StudentsController', ['$scope', 'studentService', function($scop
 
                 studentService.deleteStudent(studentID);
 
-
                 break;
             }
         }
     }
 
+    $scope.editStudent = function (studentID) {
+        //Todo make this a material modal
+        showEditModal(studentID);
+    }
+
+    $scope.restoreStudent = function() {
+        if ($scope.deletedStudents.length > 0) {
+            let student = $scope.deletedStudents.pop();
+            delete student.$$hashKey;
+            studentService.restoreStudent(student);
+            $scope.students.push(student);
+        }
+    }
+
+    $scope.viewTable = function(){
+        $scope.showTiles = false;
+    }
+
+    $scope.viewTiles = function(){
+        $scope.showTiles = true;
+    }
 }]);

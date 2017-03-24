@@ -17,6 +17,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Students</title>
+    <link type="text/css" rel="stylesheet" href="lib/materialize.0.98.1.min.css" media="screen,projection"/>
+
     <link rel='stylesheet' href='./lib/bootstrap-3.3.6.min.css' crossorigin='anonymous'>
     <link rel='stylesheet' href='./lib/bootstrap-theme-3.3.6.min.css' crossorigin='anonymous'>
 
@@ -33,21 +35,23 @@
     <div class='container-fluid'>
         <div class='btn-group' role='group' aria-label='...'>
             <a href='#' data-toggle='tooltip' title='Display Table'>
-                <button type='button' class='btn btn-default' id='tableViewButton'>
-                    <span class='glyphicon glyphicon-check' aria-hidden='true' id='tableViewButtonCheckbox'></span>
+                <button type='button' class='btn btn-default' ng-click='viewTable()'>
+                    <span class='glyphicon glyphicon-check' aria-hidden='true' ng-show="!showTiles"></span>
+                    <span class='glyphicon glyphicon-unchecked' aria-hidden='true' ng-show="showTiles"></span>
                     Table
                 </button>
             </a>
 
             <a href='#' data-toggle='tooltip' title='Display Tiles'>
-                <button type='button' class='btn btn-default' id='tileViewButton'>
-                    <span class='glyphicon glyphicon-unchecked' aria-hidden='true' id='tileViewButtonCheckbox'></span>
+                <button type='button' class='btn btn-default' ng-click='viewTiles()'>
+                    <span class='glyphicon glyphicon-check' aria-hidden='true' ng-show="showTiles"></span>
+                    <span class='glyphicon glyphicon-unchecked' aria-hidden='true' ng-show="!showTiles"></span>
                     Tile
                 </button>
             </a>
 
             <a href='#' data-toggle='tooltip' title='Restore Last Deleted Student'>
-                <button type='button' class='btn btn-default ' id='restoreStudentButton'>
+                <button type='button' class='btn btn-default ' ng-click='restoreStudent()'>
                     <span class='glyphicon glyphicon-repeat icon-flipped' aria-hidden='true' id='restoreStudentButtonIcon'></span>
                     
                 </button>
@@ -63,10 +67,31 @@
 
 
         <!-- Tile View ------------------------------->
-        <div class='row row-eq-height' id='studentGridTiles'>
+        <div class='row row-eq-height' ng-show="showTiles">
+            <div class='panel panel-default col-xxs-12 col-xs-6 col-sm-4 col-lg-2' ng-repeat="student in students | orderBy:propertyName:reverseSort">
+                <div class='panel-heading'>
+                    <h3 class='panel-title'>
+                        <span ng-bind-html="student.fname"></span>
+                        <span ng-bind-html="student.lname"></span>
+                    </h3>
+                </div>
+                <div class='panel-body'>
+                    <b>Address</b><br>
+                    <span ng-bind-html="student.address"></span><br>
+                    <span ng-bind-html="student.city"></span>
+                    <span ng-bind-html="student.state"></span>
+                    <span ng-bind-html="student.zip"></span>}<br>
+                    <b>Phone</b>
+                    <span ng-bind-html="student.phone"></span><br>
+                    <b>Year </b>
+                    <span ng-bind-html="yearNumToText(student.year)"></span><br>
+                    <b>Start Date</b>
+                    <span ng-bind-html="student.startDate"></span>
+                </div>
+            </div>
         </div>
         <!-- Table View ------------------------------->
-        <table class='table table-striped' id='studentTable' >
+        <table class='table table-striped' ng-show="!showTiles">
             <thead>
                 <tr>
                     <th class='tableHeading'  ng-click="sortBy('name')">
@@ -158,14 +183,17 @@
                         <ng-bind-html ng-bind-html="student.street" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.city" /></td>
-                    <td>
-                        <ng-bind-html ng-bind-html="student.state" />\
+                        <ng-bind-html ng-bind-html="student.city" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.zip" /></td>
+                        <ng-bind-html ng-bind-html="student.state" />
+                    </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.phone" /></td>
+                        <ng-bind-html ng-bind-html="student.zip" />
+                    </td>
+                    <td>
+                        <ng-bind-html ng-bind-html="student.phone" />
+                    </td>
                     <td>
                         <ng-bind-html ng-bind-html="yearNumToText(student.year)" /></td>
                     <td>
@@ -281,12 +309,14 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src='./lib/jquery-2.2.4.min.js'></script>
+    <script type="text/javascript" src="lib/materialize.0.98.1.min.js"></script>
     <script src='./lib/bootstrap-3.3.6.min.js' crossorigin='anonymous'></script>
 
     <script src='sortComparators.js'></script>
     <script src='script.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.min.js"></script>
+    <script src='./lib/materialize.0.98.1.min.js'> </script>
+    <script src="./lib/angular.1.6.1.min.js"></script>
+    <script src="./lib/angular-sanitize.1.6.1.min.js"></script>
     <script src="StudentsController.js"></script>
 
 

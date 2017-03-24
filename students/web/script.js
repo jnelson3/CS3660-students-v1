@@ -619,7 +619,8 @@ function showEditModal(id) {
     console.log('id = ' + id);
     if (id) {
         for (var i = 0; i < students.length; i++) {
-            console.log('student = ' + students[i].fname)
+            console.log("i = " + i);
+            //console.log('student = ' + students[i].fname)
             if (students[i].id == id) {
                 $('#editModalFName').attr('value', students[i].fname);
                 $('#editModalLName').attr('value', students[i].lname);
@@ -800,4 +801,13 @@ function setCookie(cname, cvalue, exdays) {
         var expires = 'expires=' + d.toUTCString();
     }
     document.cookie = cname + '=' + cvalue + '; ' + expires;
+}
+
+function pad(num) {
+    var s = "0000" + num;
+    return s.substr(s.length - 4);
+}
+
+function depad(num) {
+
 }

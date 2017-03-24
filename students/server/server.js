@@ -11,7 +11,7 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var bodyParser = require('body-parser');
 
-var WEB = path.resolve('./students/web'); // __dirname is the directory where the application is running from
+var WEB = path.resolve('../../students/web'); // __dirname is the directory where the application is running from
 //var WEB = __dirname.replace('server', 'web');
 var SERVER = __dirname; // __dirname is the directory where the application is running from
 
