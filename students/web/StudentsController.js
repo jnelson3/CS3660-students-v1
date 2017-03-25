@@ -1,8 +1,6 @@
 let url = 'http://localhost/api/v1/students';
 
-
-
-let app = angular.module('app', ['ngSanitize']);
+let app = angular.module('app', ['ngSanitize', 'ui.materialize']);
 app.factory('studentService', function($http) {
     return {
         getStudents: function () {
@@ -16,10 +14,19 @@ app.factory('studentService', function($http) {
         },
         restoreStudent: function(student) {
             return $http.put(`${url}/${student.id}.json`, JSON.stringify(student));
+        },
+        addStudent: function(student) {
+            return $http.post(`${url}`, JSON.stringify(student));
+        },
+        updateStudent: function(student) {
+            return $http.put(`${url}/${student.id}.json`, JSON.stringify(student))
         }
     };
 });
-app.controller('StudentsController', ['$scope', 'studentService', function($scope, studentService){
+app.controller('StudentsController', ['$scope', 'studentService',
+function($scope, studentService){
+    $scope.loadingModalOpen = true;
+    dataLoaded = false;
     $scope.students = [];
     $scope.deletedStudents = [];
     $scope.reverseSort = false;
@@ -29,13 +36,27 @@ app.controller('StudentsController', ['$scope', 'studentService', function($scop
     studentService.getStudents().then(function(res) {
         //$scope.students = res.data;
         let studentIds = res.data;
+        let count = 0;
         for (let studentId of studentIds){
+            count++;
             studentService.getStudent(studentId).then(function(res){
                 $scope.students.push(res.data);
                 console.log(JSON.stringify(res.data));
+                count--;
+                if (count <= 0) {
+                    dataLoaded = true;
+                }
             });
         };
     })
+
+    $scope.loadingModalReady = function() {
+        if (dataLoaded) {
+            //$scope.loadingModalOpen = false;
+        }
+        console.log("loading modal ready");
+    }
+
 
     $scope.yearNumToText = function (year) {
 
@@ -99,9 +120,18 @@ app.controller('StudentsController', ['$scope', 'studentService', function($scop
         }
     }
 
-    $scope.editStudent = function (studentID) {
-        //Todo make this a material modal
-        showEditModal(studentID);
+    $scope.editStudent = function (student) {
+        studentService.updateStudent(student);
+    }
+
+    $scope.addStudent = function(student) {
+        console.log("adding Student");
+        studentService.addStudent(student).then(function(res){
+            studentService.getStudent(res.data).then(function(res){
+                $scope.students.push(res.data);
+            })
+        });
+
     }
 
     $scope.restoreStudent = function() {
@@ -121,3 +151,8 @@ app.controller('StudentsController', ['$scope', 'studentService', function($scop
         $scope.showTiles = true;
     }
 }]);
+app.directive('ngStudent', function() {
+    return {
+        template: '{{student.fname}} {{student.lname}}'
+    };
+});

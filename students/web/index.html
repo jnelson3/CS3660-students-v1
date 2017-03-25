@@ -18,9 +18,10 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Students</title>
     <link type="text/css" rel="stylesheet" href="lib/materialize.0.98.1.min.css" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel='stylesheet' href='./lib/bootstrap-3.3.6.min.css' crossorigin='anonymous'>
-    <link rel='stylesheet' href='./lib/bootstrap-theme-3.3.6.min.css' crossorigin='anonymous'>
+    <!--<link rel='stylesheet' href='./lib/bootstrap-3.3.6.min.css' crossorigin='anonymous'>
+    <link rel='stylesheet' href='./lib/bootstrap-theme-3.3.6.min.css' crossorigin='anonymous'>-->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,34 +34,36 @@
 
 <body ng-app="app" ng-controller="StudentsController">
     <div class='container-fluid'>
+
+
+        <!-- test modal -->
+        <div class="modal" id="testModal">
+            <div class="modal-content">
+                <h4>Testing</h4>
+                hello.
+            </div>
+        </div>
+
         <div class='btn-group' role='group' aria-label='...'>
             <a href='#' data-toggle='tooltip' title='Display Table'>
                 <button type='button' class='btn btn-default' ng-click='viewTable()'>
-                    <span class='glyphicon glyphicon-check' aria-hidden='true' ng-show="!showTiles"></span>
-                    <span class='glyphicon glyphicon-unchecked' aria-hidden='true' ng-show="showTiles"></span>
+                    <i class='medium material-icons' ng-show="!showTiles">check_box</i>
+                    <i class='medium material-icons' ng-show="showTiles">check_box_outline_blank</i>
                     Table
                 </button>
             </a>
 
             <a href='#' data-toggle='tooltip' title='Display Tiles'>
                 <button type='button' class='btn btn-default' ng-click='viewTiles()'>
-                    <span class='glyphicon glyphicon-check' aria-hidden='true' ng-show="showTiles"></span>
-                    <span class='glyphicon glyphicon-unchecked' aria-hidden='true' ng-show="!showTiles"></span>
+                    <i class='medium material-icons' ng-show="showTiles">check_box</i>
+                    <i class='medium material-icons' ng-show="!showTiles">check_box_outline_blank</i>
                     Tile
                 </button>
             </a>
 
             <a href='#' data-toggle='tooltip' title='Restore Last Deleted Student'>
                 <button type='button' class='btn btn-default ' ng-click='restoreStudent()'>
-                    <span class='glyphicon glyphicon-repeat icon-flipped' aria-hidden='true' id='restoreStudentButtonIcon'></span>
-                    
-                </button>
-            </a>
-
-            <a href='#' data-toggle='tooltip' title='Add New Student'>
-                <button type='button' class='btn btn-default' id='addStudentButton'>
-                    <span class='glyphicon glyphicon-plus' aria-hidden='true' id='addStudentButtonIcon'></span>
-                    
+                    <span class='medium material-icons'>undo</span>
                 </button>
             </a>
         </div>
@@ -70,9 +73,7 @@
         <div class='row row-eq-height' ng-show="showTiles">
             <div class='panel panel-default col-xxs-12 col-xs-6 col-sm-4 col-lg-2' ng-repeat="student in students | orderBy:propertyName:reverseSort">
                 <div class='panel-heading'>
-                    <h3 class='panel-title'>
-                        <span ng-bind-html="student.fname"></span>
-                        <span ng-bind-html="student.lname"></span>
+                    <h3 class='panel-title' ng-student>
                     </h3>
                 </div>
                 <div class='panel-body'>
@@ -91,7 +92,7 @@
             </div>
         </div>
         <!-- Table View ------------------------------->
-        <table class='table table-striped' ng-show="!showTiles">
+        <table class='striped' ng-show="!showTiles">
             <thead>
                 <tr>
                     <th class='tableHeading'  ng-click="sortBy('name')">
@@ -173,57 +174,85 @@
             <tbody id='studentTableRows'>
                 <tr id="${student.id}" ng-repeat="student in students | orderBy:propertyName:reverseSort">
                     <td>
-                        <span ng-bind-html="student.fname"></span>
-                        <span ng-bind-html="student.lname"></span>
+                        <input type="text" ng-model="student.fname">
+                        <input type="text" ng-model="student.lname">
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.startDate" />
+                        <input type="text" ng-model="student.startDate" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.street" />
+                        <input type="text" ng-model="student.street" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.city" />
+                        <input type="text" ng-model="student.city" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.state" />
+                        <input type="text" ng-model="student.state" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.zip" />
+                        <input type="text" ng-model="student.zip" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="student.phone" />
+                        <input type="text" ng-model="student.phone" />
                     </td>
                     <td>
-                        <ng-bind-html ng-bind-html="yearNumToText(student.year)" /></td>
+                        <input type="text" ng-model="student.year" /></td>
                     <td>
                         <a href='#' data-toggle='tooltip' title='Delete'>
-                            <span class="glyphicon glyphicon-trash delete-button" aria-hidden="true" ng-click="deleteStudent(student.id)"></span>
+                            <span class="small material-icons" ng-click="deleteStudent(student.id)">delete</span>
                         </a>
 
                         <a href='#' data-toggle='tooltip' title='Edit'>
-                            <span class="glyphicon glyphicon-pencil edit-button" aria-hidden="true" ng-click="editStudent(student.id)"></span>
+                            <span class="small material-icons" ng-click="editStudent(student)">edit</span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.fname" placeholder="First Name">
+                        <input type="text" name="firstname" ng-model="user.lname" placeholder="Last Name">
+                    </td>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.startDate" placeholder="Start Date">
+                    </td>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.street" placeholder="Address">
+                    </td>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.city" placeholder="City">
+                    </td>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.state" placeholder="State">
+                    </td>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.zip" placeholder="ZIP">
+                    </td>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.phone" placeholder="Phone">
+                    </td>
+                    <td>
+                        <input type="text" name="firstname" ng-model="user.year" placeholder="Year">
+                    </td>
+                    <td>
+                        <a href=""  ng-click="addStudent(user)">
+                            <span class='medium material-icons'>add</span>
                         </a>
                     </td>
                 </tr>
             </tbody>
         </table>
 
+        <a href="#loadingModal" modal open="loadingModalOpen" ready="loadingModalReady()" complete="loadingModalComplete()" ng-show="true">open modal</a>
         <!-- Loading Modal -->
-        <div class='modal fade' id='loadingModal' role='dialog'>
-            <div class='modal-dialog'>
-
-                <!-- Modal content-->
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                        <h4 class='modal-title'>Loading Data</h4>
-                    </div>
-                    <div class='modal-body'>
-                        <p>Please wait while we load the data from the server.</p>
-                    </div>
+        <div class='modal fade' id='loadingModal'>
+            <!-- Modal content-->
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h4 class='modal-title'>Loading Data</h4>
                 </div>
-
+                <div class='modal-body'>
+                    <p>Please wait while we load the data from the server.</p>
+                </div>
             </div>
         </div>
 
@@ -245,54 +274,90 @@
             </div>
         </div>
 
+
         <!-- Edit Modal -->
-        <div class='modal fade' id='editModal' role='dialog'>
-            <div class='modal-dialog'>
-
-                <!-- Modal content-->
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                        <h4 class='modal-title' id='editModalTitle'>Edit Contact</h4>
-                    </div>
-                    <div class='modal-body' id='editModalBody'>
-                        First name:<br>
-                        <input type="text" name="firstname" id='editModalFName'><br> Last name:<br>
-                        <input type="text" name="lastname" id='editModalLName'><br> Start Date:<br>
-                        <input type="text" name="startdate" id='editModalStartDate'><br> Address:
-                        <br>
-                        <input type="text" name="address" id="editModalAddres"><br> City:
-                        <br>
-                        <input type="text" name="city" id="editModalCity"><br> State:
-                        <br>
-                        <input type="text" name="state" id="editModalState"><br> ZIP:
-                        <br>
-                        <input type="text" name="zip" id="editModalZip"><br> Phone:
-                        <br>
-                        <input type="text" name="phone" id="editModalPhone"><br> Year:
-                        <br>
-                        <input type="text" name="year" id="editModalYear"><br>
-                        <br><br>
-                        <input type="button" name="submit" value="submit" id="editModalSubmit">
-                        </form>
-                    </div>
-                </div>
-
+        <div class='modal' id='editModal'>
+            <!-- Modal content-->
+            <div class='modal-content'>
+                <h4 class='modal-title' id='editModalTitle'>Edit Contact</h4>
+                First name:<br>
+                <input type="text" name="firstname" id='editModalFName'><br> Last name:<br>
+                <input type="text" name="lastname" id='editModalLName'><br> Start Date:<br>
+                <input type="text" name="startdate" id='editModalStartDate'><br> Address:
+                <br>
+                <input type="text" name="address" id="editModalAddres"><br> City:
+                <br>
+                <input type="text" name="city" id="editModalCity"><br> State:
+                <br>
+                <input type="text" name="state" id="editModalState"><br> ZIP:
+                <br>
+                <input type="text" name="zip" id="editModalZip"><br> Phone:
+                <br>
+                <input type="text" name="phone" id="editModalPhone"><br> Year:
+                <br>
+                <input type="text" name="year" id="editModalYear"><br>
+                <br><br>
+                <input type="button" name="submit" value="submit" id="editModalSubmit">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
             </div>
         </div>
 
+        <!-- Add Student Modal -->
+        <div class='modal' id='addModal'>
+            <!-- Modal content-->
+            <div class='modal-content'>
+                <h4 class='modal-title' id='addModalTitle'>Add Contact</h4>
+                First name:<br>
+                <input type="text" name="firstname" ng-model="user.fname" id='addModalFName'><br>
+                Last name:<br>
+                <input type="text" name="lastname" ng-model="user.lname" id='addModalLName'><br>
+                Start Date:<br>
+                <input type="text" name="startdate" ng-model="user.stardate" id='addModalStartDate'><br>
+                Address:
+                <br>
+                <input type="text" name="address" ng-model="user.address" id="addModalAddres"><br>
+                City:
+                <br>
+                <input type="text" name="city" ng-model="user.city" id="addModalCity"><br>
+                State:
+                <br>
+                <input type="text" name="state" ng-model="user.state" id="addModalState"><br>
+                ZIP:
+                <br>
+                <input type="text" name="zip" ng-model="user.zip" id="addModalZip"><br>
+                Phone:
+                <br>
+                <input type="text" name="phone" ng-model="user.phone" id="addModalPhone"><br>
+                Year:
+                <br>
+                <input type="text" name="year" ng-model="user.year" id="addModalYear"><br>
+                <br><br>
+                <input type="button" name="submit" value="submit" ng-click="console.log(user)" id="addModalSubmit">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" ng-click="console.log('hello')" class="modal-action modal-close btn">Agree</a>
+            </div>
+        </div>
+<!--
         <div class='btn-group' role='group' aria-label='...'>
             <a href='#' data-toggle='tooltip' title='Previous Page'>
                 <button type='button' class='btn btn-default' id='previousPageButton'>
-                    <span class='glyphicon glyphicon-menu-left' aria-hidden='true' id='previousPageButtonIcon'></span>
+                    <span class='glyphicon glyphicon-menu-left' aria-hidden='true' id='previousPageButtonIcon'>⇐</span>
                 </button>
             </a>
 
             <a href='#' data-toggle='tooltip' title='Next Page'>
                 <button type='button' class='btn btn-default' id='nextPageButton'>
-                    <span class='glyphicon glyphicon-menu-right' aria-hidden='true' id='nextPageButtonIcon'></span>
+                    <span class='glyphicon glyphicon-menu-right' aria-hidden='true' id='nextPageButtonIcon'>⇒
+
+</span>
                 </button>
             </a>
+-->
         </div>
     </div>
 
@@ -313,13 +378,12 @@
     <script src='./lib/bootstrap-3.3.6.min.js' crossorigin='anonymous'></script>
 
     <script src='sortComparators.js'></script>
-    <script src='script.js'></script>
+    <!--<script src='script.js'></script>-->
     <script src='./lib/materialize.0.98.1.min.js'> </script>
     <script src="./lib/angular.1.6.1.min.js"></script>
     <script src="./lib/angular-sanitize.1.6.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
     <script src="StudentsController.js"></script>
-
-
 
 </body>
 

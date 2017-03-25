@@ -728,7 +728,7 @@ function loadStudentIds() {
 function loadStudents() {
     let studentMax = 10;
 
-    $('#loadingModal').modal('show');
+    jQuery('#loadingModal').modal('show');
     $.when($.ajax(jQurl + '/students.json')).done(function(data, statusText, jqXHR) {
         studentIds = data;
         loadPage(0);
