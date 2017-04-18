@@ -4,7 +4,7 @@
 
 let express = require('express');
 let bodyParser = require('body-parser');
-let fs = require('fs');
+let students = require('./studentMongoDAO');
 var router = express.Router();
 
 // middleware
@@ -19,83 +19,54 @@ router.post('/', function(req, res, next){
         return;
     }
 
-    fs.readdir(`${__dirname}/students`, function(err, files) {
-        if (err) {
-            res.sendStatus(500);
-            return;
-        };
-
-        var fileList = files.map(fileName => fileName.replace('.json', ''));
-
-        var id = pad(parseInt(fileList[fileList.length - 1]) + 1);
-        data.id = id;
-
-        fs.writeFile(`${__dirname}/students/${id}.json`, JSON.stringify(data, null, 2), 'utf8', function(err) {
-            if (err) {
-                res.sendStatus(500);
-                return;
-            };
-
-            res.status(201).json(id); // send status 200 and fileList
-        });
-    });
+    students.create(data, function(err, result){
+        if (err) res.sendStatus(500);
+        else res.status(201).json(result.id);
+    })
 });
 //List
 router.get('/students.json', function(req, res, next){
-    fs.readdir(`${__dirname}/students`, function(err, files) {
-        if (err) {
-            res.sendStatus(404);
-        } else {
-            var fileList = files.map(fileName => fileName.replace('.json', ''));
-            res.json(fileList); // send status 200 and fileList
-        }
+    students.list(function(err, result) {
+        res.json(result);
     });
 });
 //Read
 router.get('/:id.json', function(req, res, next){
-    var id = req.params.id;
-    fs.readFile(`${__dirname}/students/${id}.json`, 'utf8', function(err, data) {
-        if (err) {
-            res.sendStatus(404);
-            next();
-        } else {
-
-            res.set('id', req.params.id);
-
-            res.status(200).json(JSON.parse(data)); // send status 200 and fileList
-        }
+    let id = req.params.id;
+    students.read(id, function(err, result) {
+        console.log(result);
+        res.set('id', result.id);
+        res.status(200).json(result); // send status 200 and fileList
 
     });
 });
 //Update
-router.put('/:id.json', function(reg, res, next){
+router.put('/:id.json', function(req, res, next){
     var id = req.params.id;
-    var data = JSON.stringify(req.body, null, 2);
+    var data = req.body
 
-    logger.debug(colors.green('content-type = ' + req.get('Content-Type')));
-    logger.debug(colors.green('data = ' + JSON.stringify(req.body)));
-
-    fs.writeFile(`${__dirname}/students/${id}.json`, data, 'utf8', function(err) {
+    students.update(id, data, function(err, result){
         if (err) {
-            throw err;
+            res.sendStatus(500);
+            console.log(err);
         } else {
-
-            res.sendStatus(204); // send status 200 and fileList
+            res.sendStatus(204);
         }
     });
 });
 //Delete
 router.delete('/:id.json', function(req, res, next){
     var id = req.params.id;
-    fs.unlink(`${__dirname}/students/${id}.json`, function(err) {
-        if (err) {
-            throw err;
-        } else {
 
-            res.sendStatus(204); // send status 200 and fileList
+    students.delete(id, function(err, result){
+        if (err) {
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(204);
         }
+
     });
-})
+});
 
 
 module.exports = router;

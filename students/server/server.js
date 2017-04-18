@@ -14,7 +14,7 @@ var compression = require('compression');
 var favicon = require('serve-favicon');
 var path = require('path');
 var bodyParser = require('body-parser');
-var rest = require('./studentsRestMongo');
+var rest = require('./studentsRest');
 
 var WEB = path.resolve('../web'); // __dirname is the directory where the application is running from
 //var WEB = __dirname.replace('server', 'web');

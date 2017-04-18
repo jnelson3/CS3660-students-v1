@@ -36,12 +36,14 @@ function($scope, studentService){
     studentService.getStudents().then(function(res) {
         //$scope.students = res.data;
         let studentIds = res.data;
+        console.log("ids = ");
+        console.log(studentIds);
         let count = 0;
         for (let studentId of studentIds){
             count++;
             studentService.getStudent(studentId).then(function(res){
                 $scope.students.push(res.data);
-                console.log(JSON.stringify(res.data));
+                console.log(res.data);
                 count--;
                 if (count <= 0) {
                     dataLoaded = true;

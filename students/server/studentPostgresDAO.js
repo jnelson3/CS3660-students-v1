@@ -33,7 +33,6 @@ exports.read = function(id, callbackFunc) {
 exports.update = function(id, data, callbackFunc) {
     mongo.connect(URL, function(err, db) {
         if(err) return callbackFunc(err, null);
-        delete data['_id'];
 
         db.collection('students')
             .updateOne(
@@ -75,7 +74,7 @@ exports.create = function(data, callbackFunc) {
 
                 db.collection('students').insertOne(data, function (err, result) {
                     if (err) console.log(err);
-                    callbackFunc(err, {id: result.ops[0].id});
+                    callbackFunc(err, result);
                     db.close();
                 });
         });
