@@ -13,13 +13,13 @@ app.factory('studentService', function($http) {
             return $http.delete(`${url}/${studentID}.json`)
         },
         restoreStudent: function(student) {
-            return $http.put(`${url}/${student.id}.json`, JSON.stringify(student));
+            return $http.put(`${url}/${student.id}.json`, angular.toJson(student));
         },
         addStudent: function(student) {
-            return $http.post(`${url}`, JSON.stringify(student));
+            return $http.post(`${url}`, angular.toJson(student));
         },
         updateStudent: function(student) {
-            return $http.put(`${url}/${student.id}.json`, JSON.stringify(student))
+            return $http.put(`${url}/${student.id}.json`, angular.toJson(student))
         }
     };
 });
