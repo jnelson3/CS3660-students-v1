@@ -15,7 +15,6 @@ exports.list = function(callbackFunc) {
 };
 
 exports.read = function(id, callbackFunc) {
-    console.log('reading student ' + id);
     fs.readFile(`${__dirname}/students/${id}.json`, 'utf8', function(err, data) {
         if (err) {
             callbackFunc(err, null);

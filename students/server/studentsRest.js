@@ -4,7 +4,7 @@
 
 let express = require('express');
 let bodyParser = require('body-parser');
-let students = require('./studentMongoDAO');
+let students = require('./studentPostgresDAO');
 var router = express.Router();
 
 // middleware
@@ -34,7 +34,6 @@ router.get('/students.json', function(req, res, next){
 router.get('/:id.json', function(req, res, next){
     let id = req.params.id;
     students.read(id, function(err, result) {
-        console.log(result);
         res.set('id', result.id);
         res.status(200).json(result); // send status 200 and fileList
 
@@ -60,6 +59,7 @@ router.delete('/:id.json', function(req, res, next){
 
     students.delete(id, function(err, result){
         if (err) {
+            console.error(err);
             res.sendStatus(500);
         } else {
             res.sendStatus(204);

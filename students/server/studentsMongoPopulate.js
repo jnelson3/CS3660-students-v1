@@ -48,4 +48,3 @@ fs.readdir(`${__dirname}/students`, function(err, files) {
         });
     });
 });
-
